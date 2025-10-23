@@ -1,24 +1,16 @@
 package de.szut.lf8_starter.project.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
 
+import java.time.LocalDate;
+
+@Data
 public class ProjectCreateDto {
     @NotBlank
-    private String name;
-    private String description;
+    private String title;
+    private long customerId;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
-    private String getName(){
-        return name;
-    }
-    private void setName(String name){
-        this.name = name;
-    }
-    private String getDescription(){
-
-        return description;
-    }
-
-    private void setDescription(String description){
-        this.description = description;
-    }
 }
