@@ -3,6 +3,8 @@ package de.szut.lf8_starter.project;
 import de.szut.lf8_starter.project.dto.ProjectCreateDto;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProjectsService {
     private final ProjectRepository projectRepository;
@@ -44,6 +46,10 @@ public class ProjectsService {
         );
 
         projectRepository.save(entity);
+    }
+
+    public List<ProjectEntity> getAllProjects() {
+        return projectRepository.findAll();
     }
 
 }

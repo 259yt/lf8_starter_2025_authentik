@@ -5,6 +5,8 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class ProjectsController {
     private final ProjectsService projectsService;
@@ -18,6 +20,12 @@ public class ProjectsController {
     public void createProject(@Valid @RequestBody ProjectCreateDto projectCreateDto ) {
         this.projectsService.createProject(projectCreateDto);
     }
+
+    @GetMapping("/api/projects")
+    public List<ProjectEntity> getAllProjects() {
+        return this.projectsService.getAllProjects();
+    }
+
 
 
 }
