@@ -52,4 +52,9 @@ public class ProjectsService {
         return projectRepository.findAll();
     }
 
+    public ProjectEntity getProjectById(long id) {
+        return projectRepository.findById(id).orElse(null);
+    }
+
+
 }
