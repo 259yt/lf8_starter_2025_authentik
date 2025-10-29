@@ -27,7 +27,8 @@ public class ProjectsController {
         return this.projectsService.getAllProjects();
     }
 
-    @GetMapping("/api/projects/{id}")
+    @GetMapping("/api/project" +
+            "s/{id}")
     public ResponseEntity<ProjectEntity> getProjectById(@PathVariable long id) {
         ProjectEntity project = this.projectsService.getProjectById(id);
         if (project == null) {
