@@ -56,5 +56,14 @@ public class ProjectsService {
         return projectRepository.findById(id).orElse(null);
     }
 
+    public boolean deleteProjectById(long id) {
+        if (!projectRepository.existsById(id)) {
+            return false;
+        }
+        projectRepository.deleteById(id);
+        return true;
+    }
+
+
 
 }
