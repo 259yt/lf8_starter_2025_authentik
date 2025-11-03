@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class ProjectsService {
@@ -57,4 +58,42 @@ public class ProjectsService {
         return projectRepository.findById(id).orElse(null);
     }
 
+    public void delete(long id) {
+        if (!projectRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Project with id " + id + " not found");
+        }
+        projectRepository.deleteById(id);
+    }
+
+    public Set<Long> getEmployees(long id) {
+        Optional<ProjectEntity> projectOptional = projectRepository.findById(id);
+        if (projectOptional.isEmpty()) {
+            throw new ResourceNotFoundException("Project with id " + id + " not found");
+        }
+        return projectOptional.get().getEmployees();
+    }
+
+    public void addEmployee(long id, Long employeeId) {
+        Optional<ProjectEntity> projectOptional = projectRepository.findById(id);
+        if (projectOptional.isEmpty()) {
+            throw new ResourceNotFoundException("Project with id " + id + " not found");
+        }
+        ProjectEntity project = projectOptional.get();
+        project.getEmployees().add(employeeId);
+        projectRepository.save(project);
+    }
+
+    public void removeEmployee(long id, Long employeeId) {
+        Optional<ProjectEntity> projectOptional = projectRepository.findById(id);
+        if (projectOptional.isEmpty()) {
+            throw new ResourceNotFoundException("Project with id " + id + " not found");
+        }
+        ProjectEntity project = projectOptional.get();
+        project.getEmployees().remove(employeeId);
+        projectRepository.save(project);
+    }
+
+    public List<ProjectEntity> getProjectsByEmployeeId(long employeeId) {
+        return projectRepository.findByEmployeesContains(employeeId);
+    }
 }
