@@ -4,6 +4,7 @@ import de.szut.lf8_starter.project.dto.ProjectCreateDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProjectsService {
@@ -16,7 +17,7 @@ public class ProjectsService {
 
     // this is only for Check Dummy Validation for Customer-ID
     public boolean validateCustomerId(long customerId) {
-        return customerId ==42 || customerId == 101 ;
+        return customerId == 42 || customerId == 101;
     }
 
 
@@ -64,6 +65,33 @@ public class ProjectsService {
         return true;
     }
 
+    public boolean updateProject(long id, ProjectCreateDto dto) {
+        Optional<ProjectEntity> optional = projectRepository.findById(id);
+        if (optional.isEmpty())
+            return false;
+
+        ProjectEntity project = optional.get();
 
 
-}
+        if (dto.getTitle() == null || dto.getTitle().isBlank())
+            throw new IllegalArgumentException("Title darf nicht leer sein.");
+
+        if (!(dto.getCustomerId() == 42 || dto.getCustomerId() == 101))
+            throw new IllegalArgumentException("Ungültige Kunden-ID.");
+
+        if (dto.getStartDate().isAfter(dto.getEndDate()))
+            throw new IllegalArgumentException("Startdatum darf nicht nach Enddatum liegen.");
+
+
+        project.setTitle(dto.getTitle());
+        project.setCustomerId(dto.getCustomerId());
+        project.setStartDate(dto.getStartDate());
+        project.setEndDate(dto.getEndDate());
+
+        projectRepository.save(project);
+        return true;
+        }
+
+
+    }
+

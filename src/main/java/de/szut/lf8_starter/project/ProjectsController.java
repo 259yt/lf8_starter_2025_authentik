@@ -37,8 +37,24 @@ public class ProjectsController {
     }
 
 
+    @PutMapping("/api/projects/{id}")
+    public ResponseEntity<Void> updateProject(@PathVariable long id, @Valid @RequestBody ProjectCreateDto dto) {
+        try {
+            boolean updated = this.projectsService.updateProject(id, dto);
+            if (updated) {
+                return ResponseEntity.noContent().build(); // 204
+            }
+            return ResponseEntity.notFound().build(); //404
+
+        } catch (Exception e) {
+            return ResponseEntity.unprocessableEntity().build();
+        }
+
+    }
+
+
     @DeleteMapping("/api/projects/{id}")
-   public ResponseEntity<Void> deleteProjectById(@PathVariable long id) {
+    public ResponseEntity<Void> deleteProjectById(@PathVariable long id) {
         boolean deleted = this.projectsService.deleteProjectById(id);
         if (deleted) {
             return ResponseEntity.noContent().build();
