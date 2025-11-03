@@ -27,3 +27,57 @@ Authorization: Bearer {{token}}
 ###
 GET https://employee-api.szut.dev/employees
 Authorization: Bearer {{token}}
+
+### Testfall 1: Projekt mit gültiger Kunden-ID erstellen (Erfolg)
+# Erwarteter Status: 201 Created
+POST http://localhost:8080/api/projects
+Content-Type: application/json
+
+{
+  "title": "Neues Projekt",
+  "customerId": 42,
+  "startDate": "2025-01-01",
+  "endDate": "2025-12-31"
+}
+
+### Testfall 2: Projekt mit ungültiger Kunden-ID erstellen (Fehler)
+# Erwarteter Status: 404 Not Found
+POST http://localhost:8080/api/projects
+Content-Type: application/json
+
+{
+  "title": "Fehlerhaftes Projekt",
+  "customerId": 9999,
+  "startDate": "2025-01-01",
+  "endDate": "2025-12-31"
+}
+
+### Testfall 3: Projekt mit gültiger Kunden-ID aktualisieren (Erfolg)
+# Annahme: Ein Projekt mit der ID 1 existiert bereits.
+# Erwarteter Status: 204 No Content
+PUT http://localhost:8080/api/projects/1
+Content-Type: application/json
+
+{
+  "title": "Aktualisiertes Projekt",
+  "customerId": 42,
+  "startDate": "2025-01-01",
+  "endDate": "2025-12-31"
+}
+
+### Testfall 4: Projekt mit ungültiger Kunden-ID aktualisieren (Fehler)
+# Annahme: Ein Projekt mit der ID 1 existiert bereits.
+# Erwarteter Status: 404 Not Found
+PUT http://localhost:8080/api/projects/1
+Content-Type: application/json
+
+{
+  "title": "Fehlerhafte Aktualisierung",
+  "customerId": 9999,
+  "startDate": "2025-01-01",
+  "endDate": "2025-12-31"
+}
+
+### Alle Projekte abrufen
+GET http://localhost:8080/api/projects
+Accept: application/json

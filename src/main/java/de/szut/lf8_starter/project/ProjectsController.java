@@ -1,6 +1,6 @@
 package de.szut.lf8_starter.project;
 
-import de.szut.lf8_starter.project.dto.ProjectCreateDto;
+import de.szut.lf8_starter.project.dto.ProjectDto;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/projects")
 public class ProjectsController {
     private final ProjectsService projectsService;
 
@@ -16,19 +17,24 @@ public class ProjectsController {
         this.projectsService = projectsService;
     }
 
-    @PostMapping("/api/projects")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void createProject(@Valid @RequestBody ProjectCreateDto projectCreateDto ) {
-        this.projectsService.createProject(projectCreateDto);
+    @PostMapping
+    public ResponseEntity<ProjectEntity> createProject(@Valid @RequestBody ProjectDto projectDto) {
+        ProjectEntity createdProject = this.projectsService.create(projectDto);
+        return new ResponseEntity<>(createdProject, HttpStatus.CREATED);
     }
 
-    @GetMapping("/api/projects")
+    @PutMapping("/{id}")
+    public ResponseEntity<ProjectEntity> updateProject(@PathVariable long id, @Valid @RequestBody ProjectDto projectDto) {
+        ProjectEntity updatedProject = this.projectsService.update(id, projectDto);
+        return new ResponseEntity<>(updatedProject, HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping
     public List<ProjectEntity> getAllProjects() {
         return this.projectsService.getAllProjects();
     }
 
-    @GetMapping("/api/project" +
-            "s/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ProjectEntity> getProjectById(@PathVariable long id) {
         ProjectEntity project = this.projectsService.getProjectById(id);
         if (project == null) {
@@ -37,8 +43,5 @@ public class ProjectsController {
         }
         return ResponseEntity.ok(project); // 200
     }
-
-
-
 
 }

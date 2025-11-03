@@ -6,11 +6,11 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Data
-public class ProjectCreateDto {
+public class ProjectDto {
     @NotBlank
     private String title;
     private long customerId;
     private LocalDate startDate;
     private LocalDate endDate;
-
 }
+
