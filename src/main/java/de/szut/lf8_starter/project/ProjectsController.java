@@ -18,7 +18,7 @@ public class ProjectsController {
 
     @PostMapping("/api/projects")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createProject(@Valid @RequestBody ProjectCreateDto projectCreateDto ) {
+    public void createProject(@Valid @RequestBody ProjectCreateDto projectCreateDto) {
         this.projectsService.createProject(projectCreateDto);
     }
 
@@ -32,12 +32,19 @@ public class ProjectsController {
         ProjectEntity project = this.projectsService.getProjectById(id);
         if (project == null) {
             return ResponseEntity.notFound().build();  //404
-
         }
         return ResponseEntity.ok(project); // 200
     }
 
 
+    @DeleteMapping("/api/projects/{id}")
+   public ResponseEntity<Void> deleteProjectById(@PathVariable long id) {
+        boolean deleted = this.projectsService.deleteProjectById(id);
+        if (deleted) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
 
 
 }
