@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="projects")
@@ -31,6 +33,11 @@ public class ProjectEntity {
 
     @Column(name = "end_date")
     private LocalDate endDate;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "project_employees", joinColumns = @JoinColumn(name = "project_id"))
+    @Column(name = "employee_id")
+    private Set<Long> employees = new HashSet<>();
 
 
 }
