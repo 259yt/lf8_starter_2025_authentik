@@ -1,5 +1,6 @@
 package de.szut.lf8_starter.project;
 
+import de.szut.lf8_starter.exception.ResourceNotFoundException;
 import de.szut.lf8_starter.project.dto.ProjectCreateDto;
 import org.springframework.stereotype.Service;
 
@@ -14,27 +15,20 @@ public class ProjectsService {
         this.projectRepository = projectRepository;
     }
 
-
-    // this is only for Check Dummy Validation for Customer-ID
-    public boolean validateCustomerId(long customerId) {
-        return customerId == 42 || customerId == 101;
-    }
-
-
     public void createProject(ProjectCreateDto projectCreateDto) {
         // Check the Title
         if (projectCreateDto.getTitle() == null || projectCreateDto.getTitle().isBlank()) {
-            throw new IllegalArgumentException("500 Title darf nicht leer sein.");
+            throw new IllegalArgumentException("Title darf nicht leer sein.");
         }
 
         // Check Customer-ID (dummy)
         if (!(projectCreateDto.getCustomerId() == 42 || projectCreateDto.getCustomerId() == 101)) {
-            throw new IllegalArgumentException("500 Ungültige Kunden-ID.");
+            throw new ResourceNotFoundException("Customer not found with id: " + projectCreateDto.getCustomerId());
         }
 
         //  Check the date
         if (projectCreateDto.getStartDate().isAfter(projectCreateDto.getEndDate())) {
-            throw new IllegalArgumentException("500 Startdatum darf nicht nach Enddatum liegen.");
+            throw new IllegalArgumentException("Startdatum darf nicht nach Enddatum liegen.");
         }
 
         //  Create Project
@@ -52,30 +46,27 @@ public class ProjectsService {
     }
 
     public ProjectEntity getProjectById(long id) {
-        return projectRepository.findById(id).orElse(null);
+        return projectRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Project not found with id: " + id));
     }
 
     public boolean deleteProjectById(long id) {
         if (!projectRepository.existsById(id)) {
-            return false;
+            throw new ResourceNotFoundException("Project not found with id: " + id);
         }
         projectRepository.deleteById(id);
         return true;
     }
 
     public boolean updateProject(long id, ProjectCreateDto dto) {
-        Optional<ProjectEntity> optional = projectRepository.findById(id);
-        if (optional.isEmpty())
-            return false;
-
-        ProjectEntity project = optional.get();
-
+        ProjectEntity project = projectRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Project not found with id: " + id));
 
         if (dto.getTitle() == null || dto.getTitle().isBlank())
             throw new IllegalArgumentException("Title darf nicht leer sein.");
 
-        if (!(dto.getCustomerId() == 42 || dto.getCustomerId() == 101))
-            throw new IllegalArgumentException("Ungültige Kunden-ID.");
+        if (!(dto.getCustomerId() == 42 || dto.getCustomerId() == 101)) {
+            throw new ResourceNotFoundException("Customer not found with id: " + dto.getCustomerId());
+        }
 
         if (dto.getStartDate().isAfter(dto.getEndDate()))
             throw new IllegalArgumentException("Startdatum darf nicht nach Enddatum liegen.");
@@ -91,6 +82,8 @@ public class ProjectsService {
     }
 
     public List<ProjectEntity> getProjectsByEmployeeId(long employeeId) {
-        return projectRepository.findByEmployeesContains(employeeId);
+        // This needs a proper implementation in the repository
+        // return projectRepository.findByEmployeesContains(employeeId);
+        return List.of();
     }
 }
