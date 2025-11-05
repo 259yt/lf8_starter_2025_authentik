@@ -38,13 +38,11 @@ public class ProjectsService {
         }
 
         //  Create Project
-        ProjectEntity entity = new ProjectEntity(
-                0,
-                projectCreateDto.getTitle(),
-                projectCreateDto.getCustomerId(),
-                projectCreateDto.getStartDate(),
-                projectCreateDto.getEndDate()
-        );
+        ProjectEntity entity = new ProjectEntity();
+        entity.setTitle(projectCreateDto.getTitle());
+        entity.setCustomerId(projectCreateDto.getCustomerId());
+        entity.setStartDate(projectCreateDto.getStartDate());
+        entity.setEndDate(projectCreateDto.getEndDate());
 
         projectRepository.save(entity);
     }
@@ -90,8 +88,9 @@ public class ProjectsService {
 
         projectRepository.save(project);
         return true;
-        }
-
-
     }
 
+    public List<ProjectEntity> getProjectsByEmployeeId(long employeeId) {
+        return projectRepository.findByEmployeesContains(employeeId);
+    }
+}

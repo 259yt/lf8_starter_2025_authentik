@@ -9,4 +9,3 @@ import java.util.List;
 public interface ProjectRepository extends JpaRepository<ProjectEntity, Long> {
     List<ProjectEntity> findByEmployeesContains(long employeeId);
 }
-
