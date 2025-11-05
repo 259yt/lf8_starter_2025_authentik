@@ -1,18 +1,18 @@
-@token = eyJhbGciOiJSUzI1NiIsImtpZCI6IjgyYzg5YjIxNTA4YjMwODQ1NDQyNGRiOGYyMDU1ODI3IiwidHlwIjoiSldUIn0.eyJpc3MiOiJodHRwczovL2F1dGhlbnRpay5zenV0LmRldi9hcHBsaWNhdGlvbi9vL2hpdGVjLyIsInN1YiI6IjhhYjRkZTBiNmJhZGQ2ZGVhNTM1M2Y3YzExNWVmN2FiZGMyMmEzYmQyZTNmZjRjMmU5NDYzN2JlY2I2OGUzMGEiLCJhdWQiOiJoaXRlY19hcGlfY2xpZW50IiwiZXhwIjoxNzYyMTk0NTQ4LCJpYXQiOjE3NjIxODczNDgsImF1dGhfdGltZSI6MTc2MjE4NzM0OCwiYWNyIjoiZ29hdXRoZW50aWsuaW8vcHJvdmlkZXJzL29hdXRoMi9kZWZhdWx0IiwiYXpwIjoiaGl0ZWNfYXBpX2NsaWVudCIsInVpZCI6IlJuS1hEY0pRdlE3Zk9RSkpkOENaMDdQR3NTWTRNSnhySko5b2dBaTAifQ.NsBw2qU4URtvrckbJtBYmtL6_0G4HV3AQMSd5QdNZyicRCeG_FJ10XMlfp4spIelf4F6CbFu9i2xsT7Uwg4Isf-mxCUbKysEu95MGFooBEO0LEJ1OxeUj_b5Cm705wHV98Br3KFSA0F5GjRVHoR7jFAchCbDKZbYuhbY_g-4tTGzL896JflLkmiD3v55QhEB4lfleUKS5pGG7B1epUKMYvDkmaqs-H0RuAPq6ynx6VMas0VVlAH1nDhwD0nJvS_gFrgEAK0R3-exeLU5REFyYQkGJwMDPadCbiIaw2LbOIDmWwfjOSiT0M8wy_JELgR3VrDxMHwTSnu3SBDhFUaODpJR8QTLSfhvCpWsMEt_urossYlsYqal0K_Kx7wX4ofJ9CN41nmAanEq6Qw3xHEvRPab7D26_mB3xf3ln-EPJzxYFQvKMC_8saCPXRR2rIQOUcRxDLnv1dJfOoNetPttuvhlVuc7wFDX-e6-hp6mCoLggov7Y5V4kTMFDEDK86adw-Nt7CsuEf2m6jMOLe4oUbkbT39skPhUAcFz34x8PsKMkbU42pgeS1lDO4DNbI7nAnzASc084wo7wgzN3W29ylh7xRpepdhp0bSk9rztZE36Rpu1PzOvPHtIAsXm73qxroivuO7QuWZCi78rFnexud5pCLZWn-dIQqodcz1Yc_Y
+@jwt = eyJhbGciOiJSUzI1NiIsImtpZCI6IjgyYzg5YjIxNTA4YjMwODQ1NDQyNGRiOGYyMDU1ODI3IiwidHlwIjoiSldUIn0.eyJpc3MiOiJodHRwczovL2F1dGhlbnRpay5zenV0LmRldi9hcHBsaWNhdGlvbi9vL2hpdGVjLyIsInN1YiI6IjhhYjRkZTBiNmJhZGQ2ZGVhNTM1M2Y3YzExNWVmN2FiZGMyMmEzYmQyZTNmZjRjMmU5NDYzN2JlY2I2OGUzMGEiLCJhdWQiOiJoaXRlY19hcGlfY2xpZW50IiwiZXhwIjoxNzYyMzM4NTg0LCJpYXQiOjE3NjIzMzEzODQsImF1dGhfdGltZSI6MTc2MjMzMTM4NCwiYWNyIjoiZ29hdXRoZW50aWsuaW8vcHJvdmlkZXJzL29hdXRoMi9kZWZhdWx0IiwiYXpwIjoiaGl0ZWNfYXBpX2NsaWVudCIsInVpZCI6Ilc1YktodmVKWGFYYzdNcUt4TVFrNVBjSk5HUEo0WlBNMHRPM0NqQW0ifQ.eavbr0Xmi3U5-WVxfH5UHgjJmVLR8UpaSpvRn84qrkAwkA6e_9eHiRXs0nXqIQVzPFZtRIj32U_mUA5atFwkEpI0MzX9FxsQYkdmiFxu7LwiEjvjFdZlEsksSz8fdgFVD4P1wDq_ZMOKs60_tGd_neibAgoACfpp7QKldva9wlE60v5nahtOfgL4sAx_XDSjaNEHo0-k9ErMmBszYNYhNwe5pXVKWZLh92mOq0E5g4GVngsqNAtNoSdDhnPw7rTiIlPGGdV37IwsRdkaIZ2JFxhUmiWxTEpNzFGDH0R4-YHXm9y9bie5C0KX9KnKQGW4OLvg60C_CzTpwmcrldsJ5vLd8Ln5hubbAVT6SVhS1sa_2iXVqbRrzYC0ACzkJgCda8WcxU76wBGEi0i4vQtAvpzX1eqpdVTPtKqb12pHR996Y55LxXiA7s47vlB9ng4QJj-y9D8bxf0ligDjHGIKiSdAchVeV2AAv710yJE4LMMVrLQB7c30N3NebJ5K3VC4rVLH_xKHNi46QmSgnmQ9ZAiT7jjU02mJgpv462KMehlob6vhtfq6lbj5QTo3ZkczQ-1BEllZozlUhl29BnEDIiQGZE2PmoCbHP0J4He8ezpiUrNmJ2ilL1kdZHHX0fjoeFL_pExh3DVIik6gx5G6v0nnacjVeceJZSvdeUnOrgg
 ###
 GET localhost:8080/welcome
 
 ###
 GET localhost:8080/roles
-Authorization: Bearer {{token}}
+Authorization: Bearer {{jwt}}
 
 ###
 GET localhost:8080/hello
-Authorization: Bearer {{token}}
+Authorization: Bearer {{jwt}}
 
 ###
 POST localhost:8080/hello
-Authorization: Bearer {{token}}
+Authorization: Bearer {{jwt}}
 Content-Type: application/json
 
 {
@@ -22,16 +22,16 @@ Content-Type: application/json
 
 ###
 GET https://employee-api.szut.dev/qualifications
-Authorization: Bearer {{token}}
+Authorization: Bearer {{jwt}}
 
 ###
 GET https://employee-api.szut.dev/employees
-Authorization: Bearer {{token}}
+Authorization: Bearer {{jwt}}
 
 ### Testfall 1: Projekt mit gültiger Kunden-ID erstellen (Erfolg)
 # Erwarteter Status: 201 Created
 POST http://localhost:8080/api/projects
-Authorization: Bearer {{token}}
+Authorization: Bearer {{jwt}}
 Content-Type: application/json
 
 {
@@ -44,7 +44,7 @@ Content-Type: application/json
 ### Testfall 2: Projekt mit ungültiger Kunden-ID erstellen (Fehler)
 # Erwarteter Status: 404 Not Found
 POST http://localhost:8080/api/projects
-Authorization: Bearer {{token}}
+Authorization: Bearer {{jwt}}
 Content-Type: application/json
 
 {
@@ -58,7 +58,7 @@ Content-Type: application/json
 # Annahme: Ein Projekt mit der ID 1 existiert bereits.
 # Erwarteter Status: 204 No Content
 PUT http://localhost:8080/api/projects/1
-Authorization: Bearer {{token}}
+Authorization: Bearer {{jwt}}
 Content-Type: application/json
 
 {
@@ -72,7 +72,7 @@ Content-Type: application/json
 # Annahme: Ein Projekt mit der ID 1 existiert bereits.
 # Erwarteter Status: 404 Not Found
 PUT http://localhost:8080/api/projects/1
-Authorization: Bearer {{token}}
+Authorization: Bearer {{jwt}}
 Content-Type: application/json
 
 {
@@ -84,5 +84,5 @@ Content-Type: application/json
 
 ### Alle Projekte abrufen
 GET http://localhost:8080/api/projects
-Authorization: Bearer {{token}}
+Authorization: Bearer {{jwt}}
 Accept: application/json

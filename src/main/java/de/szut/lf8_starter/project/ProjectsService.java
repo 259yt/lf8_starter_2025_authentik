@@ -2,13 +2,11 @@ package de.szut.lf8_starter.project;
 
 import de.szut.lf8_starter.client.ClientService;
 import de.szut.lf8_starter.exceptionHandling.ClientNotFoundException;
-import de.szut.lf8_starter.exceptionHandling.ResourceNotFoundException;
-import de.szut.lf8_starter.project.dto.ProjectDto;
+import de.szut.lf8_starter.project.dto.ProjectCreateDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class ProjectsService {
@@ -20,34 +18,19 @@ public class ProjectsService {
         this.clientService = clientService;
     }
 
-    public ProjectEntity create(ProjectDto dto) {
-        if (!clientService.isClientValid(dto.getCustomerId())) {
-            throw new ClientNotFoundException("Client with id " + dto.getCustomerId() + " not found");
+    public void createProject(ProjectCreateDto projectCreateDto) {
+        if (!clientService.isClientValid(projectCreateDto.getCustomerId())) {
+            throw new ClientNotFoundException("Client with id " + projectCreateDto.getCustomerId() + " not found");
+        }
+        if (projectCreateDto.getTitle() == null || projectCreateDto.getTitle().isBlank()) {
+            throw new IllegalArgumentException("Title darf nicht leer sein.");
         }
         ProjectEntity entity = new ProjectEntity();
-        entity.setTitle(dto.getTitle());
-        entity.setCustomerId(dto.getCustomerId());
-        entity.setStartDate(dto.getStartDate());
-        entity.setEndDate(dto.getEndDate());
-        return projectRepository.save(entity);
-    }
-
-    public ProjectEntity update(long id, ProjectDto dto) {
-        Optional<ProjectEntity> projectOptional = projectRepository.findById(id);
-        if (projectOptional.isEmpty()) {
-            throw new ResourceNotFoundException("Project with id " + id + " not found");
-        }
-
-        if (!clientService.isClientValid(dto.getCustomerId())) {
-            throw new ClientNotFoundException("Client with id " + dto.getCustomerId() + " not found");
-        }
-
-        ProjectEntity entity = projectOptional.get();
-        entity.setTitle(dto.getTitle());
-        entity.setCustomerId(dto.getCustomerId());
-        entity.setStartDate(dto.getStartDate());
-        entity.setEndDate(dto.getEndDate());
-        return projectRepository.save(entity);
+        entity.setTitle(projectCreateDto.getTitle());
+        entity.setCustomerId(projectCreateDto.getCustomerId());
+        entity.setStartDate(projectCreateDto.getStartDate());
+        entity.setEndDate(projectCreateDto.getEndDate());
+        projectRepository.save(entity);
     }
 
     public List<ProjectEntity> getAllProjects() {
@@ -58,39 +41,41 @@ public class ProjectsService {
         return projectRepository.findById(id).orElse(null);
     }
 
-    public void delete(long id) {
+    public boolean deleteProjectById(long id) {
         if (!projectRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Project with id " + id + " not found");
+            return false;
         }
         projectRepository.deleteById(id);
+        return true;
     }
 
-    public Set<Long> getEmployees(long id) {
-        Optional<ProjectEntity> projectOptional = projectRepository.findById(id);
-        if (projectOptional.isEmpty()) {
-            throw new ResourceNotFoundException("Project with id " + id + " not found");
+    public boolean updateProject(long id, ProjectCreateDto dto) {
+        Optional<ProjectEntity> optional = projectRepository.findById(id);
+        if (optional.isEmpty()) {
+            return false;
         }
-        return projectOptional.get().getEmployees();
-    }
 
-    public void addEmployee(long id, Long employeeId) {
-        Optional<ProjectEntity> projectOptional = projectRepository.findById(id);
-        if (projectOptional.isEmpty()) {
-            throw new ResourceNotFoundException("Project with id " + id + " not found");
+        if (!clientService.isClientValid(dto.getCustomerId())) {
+            throw new ClientNotFoundException("Client with id " + dto.getCustomerId() + " not found");
         }
-        ProjectEntity project = projectOptional.get();
-        project.getEmployees().add(employeeId);
+
+        ProjectEntity project = optional.get();
+
+        if (dto.getTitle() == null || dto.getTitle().isBlank()) {
+            throw new IllegalArgumentException("Title darf nicht leer sein.");
+        }
+
+        if (dto.getStartDate() != null && dto.getEndDate() != null && dto.getStartDate().isAfter(dto.getEndDate())) {
+            throw new IllegalArgumentException("Startdatum darf nicht nach Enddatum liegen.");
+        }
+
+        project.setTitle(dto.getTitle());
+        project.setCustomerId(dto.getCustomerId());
+        project.setStartDate(dto.getStartDate());
+        project.setEndDate(dto.getEndDate());
+
         projectRepository.save(project);
-    }
-
-    public void removeEmployee(long id, Long employeeId) {
-        Optional<ProjectEntity> projectOptional = projectRepository.findById(id);
-        if (projectOptional.isEmpty()) {
-            throw new ResourceNotFoundException("Project with id " + id + " not found");
-        }
-        ProjectEntity project = projectOptional.get();
-        project.getEmployees().remove(employeeId);
-        projectRepository.save(project);
+        return true;
     }
 
     public List<ProjectEntity> getProjectsByEmployeeId(long employeeId) {

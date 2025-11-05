@@ -13,7 +13,7 @@ public class ClientService {
      */
     public boolean isClientValid(long clientId) {
         // TODO: Implement actual client validation logic
-        return true;
+        return clientId == 42 || clientId == 101;
     }
 }
 
