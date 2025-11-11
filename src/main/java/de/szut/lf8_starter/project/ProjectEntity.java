@@ -40,4 +40,10 @@ public class ProjectEntity {
     private Set<Long> employees = new HashSet<>();
 
 
+    public ProjectEntity( String title, long customerId, LocalDate startDate, LocalDate endDate) {
+        this.endDate = endDate;
+        this.startDate = startDate;
+        this.customerId = customerId;
+        this.title = title;
+    }
 }
