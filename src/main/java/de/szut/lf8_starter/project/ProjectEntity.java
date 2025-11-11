@@ -33,4 +33,10 @@ public class ProjectEntity {
     private LocalDate endDate;
 
 
+    public ProjectEntity( String title, long customerId, LocalDate startDate, LocalDate endDate) {
+        this.endDate = endDate;
+        this.startDate = startDate;
+        this.customerId = customerId;
+        this.title = title;
+    }
 }
