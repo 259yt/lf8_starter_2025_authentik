@@ -24,6 +24,8 @@ repositories {
 }
 
 dependencies {
+    implementation("tools.jackson.core:jackson-databind:3.0.1")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web")
     compileOnly("org.projectlombok:lombok")
@@ -42,4 +44,12 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+tasks.named<org.springframework.boot.gradle.tasks.run.BootRun>("bootRun") {
+    systemProperty("spring.profiles.active", "local")
+}
+tasks.named<org.springframework.boot.gradle.tasks.run.BootRun>("bootRun") {
+    systemProperty("spring.jpa.hibernate.ddl-auto", "update")
+    systemProperty("spring.jpa.show-sql", "true")
+    systemProperty("spring.jpa.properties.hibernate.format_sql", "true")
 }
